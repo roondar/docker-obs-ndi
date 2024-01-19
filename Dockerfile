@@ -15,23 +15,20 @@ ENV VNC_PASSWD=headless
 ENV NVIDIA_DRIVER_CAPABILITIES="compute,video,utility"
 
 # Make sure the dependencies are met
-RUN echo headless | sudo -S -k apt-get update \
+RUN echo headless | sudo -S -k apt update \
 	&& echo headless | sudo -S -k apt install -y --fix-broken avahi-daemon xterm git build-essential cmake curl ffmpeg git libboost-dev libnss3 mesa-utils qtbase5-dev strace x11-xserver-utils net-tools python3 python3-numpy scrot wget software-properties-common vlc jq udev unrar qt5-image-formats-plugins \
-	&& echo headless | sudo -S -k sed -i 's/geteuid/getppid/' /usr/bin/vlc \
-	&& echo headless | sudo -S -k add-apt-repository ppa:obsproject/obs-studio \
+	&& echo headless | sudo -S -k sed -i 's/geteuid/getppid/' /usr/bin/vlc 
+RUN echo headless | sudo -S -k add-apt-repository ppa:obsproject/obs-studio \
 	&& echo headless | sudo -S -k mkdir -p /config/obs-studio /root/.config/ \
 	&& echo headless | sudo -S -k ln -s /config/obs-studio/ /root/.config/obs-studio \
 	&& echo headless | sudo -S -k apt install -y obs-studio \
-	&& echo "**** install runtime packages ****" \
-	&& echo headless | sudo -S -k apt-get update \
-	&& echo headless | sudo -S -k apt-get clean -y \
-# Copy various files to their respective places
-	&& echo headless | sudo -S -k wget -q -O /tmp/libndi4_4.5.1-1_amd64.deb https://github.com/Palakis/obs-ndi/releases/download/dummy-tag-4.10.0/libndi4_4.5.1-1_amd64.deb \
-	&& echo headless | sudo -S -k wget -q -O /tmp/obs-ndi-4.10.0-Ubuntu64.deb https://github.com/Palakis/obs-ndi/releases/download/dummy-tag-4.10.0/obs-ndi-4.10.0-Ubuntu64.deb \
+	&& echo headless | sudo -S -k apt clean -y 
+RUN wget -q -O /tmp/obs-ndi.deb https://github.com/obs-ndi/obs-ndi/releases/download/4.13.0/obs-ndi-4.13.0-x86_64-linux-gnu.deb \
+ 	&& echo headless | sudo -S -k dpkg -i /tmp/obs-ndi.deb 
+RUN wget -q -O /tmp/libndi-get.sh https://github.com/obs-ndi/obs-ndi/blob/master/CI/libndi-get.sh \
+	&& echo headless | sudo -S -k /tmp/libndi-get.sh
 
-# Download and install the plugins for NDI
-	&& echo headless | sudo -S -k dpkg -i /tmp/*.deb \
-	&& echo headless | sudo -S -k rm -rf /tmp/*.deb \
+RUN echo headless | sudo -S -k rm -rf /tmp/*.deb \
 	&& echo headless | sudo -S -k rm -rf /var/lib/apt/lists/* \
 	
 VOLUME ["/config"]
