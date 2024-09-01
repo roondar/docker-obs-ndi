@@ -1,15 +1,25 @@
-kind: pipeline
-name: default
-
-steps:
-- name: docker  
-  image: plugins/docker
-  settings:
-    repo: suleimant/docker-obs-ndi
-    username:
-      from_secret: DOCKER_USERNAME
-    password:
-      from_secret: DOCKER_PASSWORD
-    tags:
-      - ${DRONE_COMMIT_BRANCH}
-      - latest
+name: Docker Image CI
+on:
+  push:
+    branches: [ "main" ]
+jobs:
+    build:
+      name: push docker image to docker hub
+      runs-on: ubuntu-22.04
+      steps:
+        - uses: actions/checkout@main
+        - name: login to docker hub
+          id: docker-hub
+          env:
+            username: ${{secrets.DOCKERHUB_USERNAME}}
+            password: ${{secrets.DOCKERHUB_PASSWORD}}
+          run: |
+            docker login -u $username -p $password 
+        - name: build the docker image
+          id: build-docker-image
+          run: |
+            ls -la 
+            docker build . -f Dockerfile -t suleimant/docker-obs-ndi:latest
+        - name: push the docker image
+          id: push-docker-image
+          run: docker push ${{secrets.DOCKERHUB_USERNAME}}/docker-obs-ndi:latest
