@@ -1,4 +1,4 @@
-FROM accetto/ubuntu-vnc-xfce-g3:v23.12
+FROM accetto/ubuntu-vnc-xfce-g3:issue-60
 
 # for the VNC connection
 EXPOSE 5901  
