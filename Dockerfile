@@ -1,5 +1,6 @@
-FROM accetto/ubuntu-vnc-xfce-g3:issue-60
-
+FROM accetto/ubuntu-vnc-xfce-g3
+# Switch to root user to avoid permission issues
+USER root
 # for the VNC connection
 EXPOSE 5901  
 # for the browser VNC client
