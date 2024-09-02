@@ -24,9 +24,9 @@ RUN echo headless | sudo -S -k add-apt-repository ppa:obsproject/obs-studio \
 	&& echo headless | sudo -S -k ln -s /config/obs-studio/ /root/.config/obs-studio \
 	&& echo headless | sudo -S -k apt install -y obs-studio \
 	&& echo headless | sudo -S -k apt clean -y 
-RUN wget -q -O /tmp/obs-ndi.deb https://github.com/DistroAV/DistroAV/releases/download/4.13.0/obs-ndi-4.13.0-x86_64-linux-gnu.deb \
+RUN wget -q -O /tmp/obs-ndi.deb https://github.com/DistroAV/DistroAV/releases/download/4.14.1/obs-ndi-4.14.1-x86_64-linux-gnu.deb \
  	&& echo headless | sudo -S -k dpkg -i /tmp/obs-ndi.deb 
-RUN wget -q  -O /tmp/libndi-get.sh https://raw.githubusercontent.com/DistroAV/DistroAV/4.13.0/CI/libndi-get.sh \
+RUN wget -q  -O /tmp/libndi-get.sh https://raw.githubusercontent.com/DistroAV/DistroAV/4.14.1/CI/libndi-get.sh \
 	&& echo headless | sudo -S -k chmod +x /tmp/libndi-get.sh \
 	&& echo headless | sudo -S -k /tmp/libndi-get.sh
 
