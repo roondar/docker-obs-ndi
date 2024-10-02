@@ -34,3 +34,4 @@ RUN echo headless | sudo -S -k rm -rf /tmp/*.deb \
 	&& echo headless | sudo -S -k rm -rf /var/lib/apt/lists/* 
 
 VOLUME ["/config"]
+
