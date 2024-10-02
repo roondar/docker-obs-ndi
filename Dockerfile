@@ -20,7 +20,7 @@ RUN echo headless | sudo -S -k apt update \
 	&& echo headless | sudo -S -k apt install -y --fix-broken avahi-daemon xterm git build-essential cmake curl ffmpeg git libboost-dev libnss3 mesa-utils qtbase5-dev strace x11-xserver-utils net-tools python3 python3-numpy scrot wget software-properties-common vlc jq udev unrar qt5-image-formats-plugins \
 	&& echo headless | sudo -S -k sed -i 's/geteuid/getppid/' /usr/bin/vlc \
 	&& echo headless | sudo -S -k wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome-stable_current_amd64.deb \
-	&& echo headless | sudo -S -k apt-get install -fy ./tmp/google-chrome-stable_current_amd64.deb \
+	&& echo headless | sudo -S -k apt-get install -fy /tmp/google-chrome-stable_current_amd64.deb \
 	&& echo headless | sudo -S -k rm /tmp/google-chrome-stable_current_amd64.deb
 
 RUN echo headless | sudo -S -k add-apt-repository ppa:obsproject/obs-studio \
